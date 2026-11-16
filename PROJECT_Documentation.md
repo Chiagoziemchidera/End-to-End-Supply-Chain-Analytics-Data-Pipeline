@@ -12,22 +12,7 @@ The current DataCo shipment dataset contains **180,519 order-item rows** and **6
 
 ## 2. Architecture and data flow
 
-```mermaid
-flowchart LR
-    A[CSV source files] --> D
-    subgraph DOCKER[Docker containers]
-      C[Airflow DAG] -. controls .-> D[Python ingestion task]
-      C -. runs after ingestion .-> E[dbt build]
-    end
-    subgraph DB[Project PostgreSQL on Windows]
-      G[public schema: raw source tables]
-      H[analytics_dev schema: dbt views]
-    end
-    D -->|loads records| G
-    G -->|dbt reads raw data| E
-    E -->|creates views| H
-    H --> I[Power BI]
-```
+<img width="1846" height="852" alt="Streamlined supply chain data architecture" src="https://github.com/user-attachments/assets/123bb31f-6aad-4fdd-80dc-b2ef92333bc5" />
 
 **Run order:** Airflow runs the Python ingestion task first. When that succeeds, it runs `dbt build`. Python loads raw records into PostgreSQL. dbt reads those raw tables and creates analytical views in PostgreSQL. Power BI reads the views.
 
