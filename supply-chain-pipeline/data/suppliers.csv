@@ -1,0 +1,9 @@
+﻿supplier_id,supplier_name,supplier_region,standard_lead_time_days
+SYN-SUP-001,Synthetic Supplier 001,West Africa,7
+SYN-SUP-002,Synthetic Supplier 002,Central Africa,10
+SYN-SUP-003,Synthetic Supplier 003,Western Europe,5
+SYN-SUP-004,Synthetic Supplier 004,Eastern Europe,8
+SYN-SUP-005,Synthetic Supplier 005,South Asia,12
+SYN-SUP-006,Synthetic Supplier 006,Southeast Asia,14
+SYN-SUP-007,Synthetic Supplier 007,North America,6
+SYN-SUP-008,Synthetic Supplier 008,Oceania,15

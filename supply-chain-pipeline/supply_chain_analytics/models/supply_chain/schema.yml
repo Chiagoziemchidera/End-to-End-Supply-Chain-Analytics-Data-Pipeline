@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: stg_order_items
+    columns:
+      - name: order_item_id
+        data_tests:
+          - unique
+          - not_null
+      - name: order_id
+        data_tests:
+          - not_null
+      - name: late_delivery_risk
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+
+  - name: int_orders
+    columns:
+      - name: order_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: mart_monthly_delivery_performance
+    columns:
+      - name: order_month
+        data_tests:
+          - unique
+          - not_null
+
+  - name: mart_delivery_by_shipping_mode
+    columns:
+      - name: order_month
+        data_tests:
+          - not_null
+      - name: shipping_mode
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - First Class
+                  - Same Day
+                  - Second Class
+                  - Standard Class
+
+  - name: mart_delivery_by_region
+    columns:
+      - name: order_region
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        data_tests:
+          - unique
+          - not_null
+      - name: product_name
+        data_tests:
+          - not_null
+
+  - name: stg_synthetic_suppliers
+    columns:
+      - name: supplier_id
+        data_tests:
+          - unique
+          - not_null
+      - name: supplier_name
+        data_tests:
+          - not_null
+
+  - name: stg_synthetic_purchase_orders
+    columns:
+      - name: purchase_order_id
+        data_tests:
+          - unique
+          - not_null
+      - name: supplier_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_synthetic_suppliers')
+                field: supplier_id
+      - name: product_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+
+  - name: mart_supplier_reliability
+    columns:
+      - name: supplier_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_synthetic_inventory_snapshots
+    columns:
+      - name: snapshot_date
+        data_tests:
+          - not_null
+      - name: product_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+      - name: preferred_supplier_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_synthetic_suppliers')
+                field: supplier_id
+      - name: data_origin
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [synthetic_inventory_demo]
+
+  - name: mart_inventory_stockout_risk
+    columns:
+      - name: product_id
+        data_tests:
+          - not_null
+      - name: stockout_risk_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - At risk
+                  - Covered
+                  - No recent demand

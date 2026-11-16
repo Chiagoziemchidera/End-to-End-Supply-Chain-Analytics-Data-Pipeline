@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: supply_chain_raw
+    schema: public
+    tables:
+      - name: raw_supply_chain_orders
+      - name: raw_synthetic_suppliers
+      - name: raw_synthetic_purchase_orders
+      - name: raw_synthetic_inventory_snapshots
