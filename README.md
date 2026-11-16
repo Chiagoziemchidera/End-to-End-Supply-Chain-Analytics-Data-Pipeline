@@ -4,18 +4,7 @@ An end-to-end data engineering project that prepares shipment, supplier, purchas
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    A[CSV inputs] --> B[Python ingestion task]
-    subgraph D[Docker containers]
-      C[Airflow DAG: ingestion then dbt] -. runs task .-> B
-      C -. runs next .-> E[dbt Core: staging → intermediate → marts]
-    end
-    B --> F[(PostgreSQL: public raw tables)]
-    F --> E
-    E --> G[(PostgreSQL: analytics_dev views)]
-    G --> H[Power BI]
-```
+<img width="1846" height="852" alt="Streamlined supply chain data architecture" src="https://github.com/user-attachments/assets/1d6f23fd-811e-4226-bd7d-1b5a6b751878" />
 
 Airflow runs the Python ingestion task first, followed by `dbt build`. Python loads source records into PostgreSQL. dbt builds and tests SQL models in the database. Power BI connects to the resulting analytical views.
 
